@@ -1,58 +1,95 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <div class="hello"></div>
 </template>
 
 <script>
+import * as tf from "@tensorflow/tfjs";
+import cocktailData from "../assets/complete_cocktails.json";
+//import top20Ingredients from "../assets/top-20s.json";
+//inputs x's = ingredients, outputs y's = categories
+
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   props: {
     msg: String
-  }
-}
-</script>
+  },
+  created() {
+    let cocktails = [];
+    let labels = [];
+    let model;
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+    let labelList = [
+      "Rum",
+      "Non-alcoholic Drinks",
+      "Shooters",
+      "Cordials and Liqueurs",
+      "Gin",
+      "Brandy",
+      "Tequila",
+      "Whiskies",
+      "Rum - Daiquiris",
+      "Vodka",
+      "Cocktail Classics"
+    ];
+
+    for (let record of cocktailData) {
+      let col = [
+        record.ingredientCat1,
+        record.ingredientCat2,
+        record.ingredientCat3,
+        record.ingredientCat4,
+        record.ingredientCat5,
+        record.ingredientCat6
+      ];
+      cocktails.push(col);
+      labels.push(labelList.indexOf(record.category));
+    }
+
+    //convert this to numeric using oneHot
+    let xs = tf.tensor2d(cocktails);
+    //tf.reshape(xs)
+
+    let labelsTensor = tf.tensor1d(labels, "int32");
+    let ys = tf.oneHot(labelsTensor, 11);
+    //for memory management
+    labelsTensor.dispose();
+
+    console.log(xs.shape);
+    console.log(ys.shape);
+    xs.print();
+    ys.print();
+
+    model = tf.sequential();
+
+    let hidden = tf.layers.dense({
+      units: 16,
+      activation: "sigmoid",
+      inputDim: 6
+    });
+    //categorical distribution over K possible values
+    let output = tf.layers.dense({
+      units: 11,
+      activation: "softmax"
+    });
+    model.add(hidden);
+    model.add(output);
+
+    //create optimizer, then loss function
+    //entropy is the chaos associated w/ a system - good for sigmoid + softmax
+    const lr = 0.2;
+    const optimizer = tf.train.sgd(lr);
+    model.compile({
+      optimizer: optimizer,
+      loss: "categoricalCrossentropy"
+    });
+    //train the model
+    const options = {
+      epochs: 10
+    };
+    model.fit(xs, ys, options).then(results => {
+      console.log(results);
+    });
+    //use the model to give a new label
+  }
+};
+</script>
