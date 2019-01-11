@@ -19,7 +19,6 @@ export default {
   data() {
     return {
       loaded: false,
-      chartdata: null,
       line: [],
       options: null,
       cocktails: [],
@@ -40,6 +39,17 @@ export default {
         "Vodka",
         "Cocktail Classics"
       ]
+    }
+  },
+  computed: {
+    chartdata() {
+      return {
+        datasets: [
+          {
+            data: this.line
+          }
+        ]
+      }
     }
   },
   methods: {
@@ -141,6 +151,7 @@ export default {
     this.loaded = false
       try {
         const { data } = await this.line
+        console.log(data);
         this.chartData = data;
         
         this.loaded = true

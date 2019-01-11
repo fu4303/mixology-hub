@@ -14,8 +14,15 @@ export default {
       responsive: true
     }
   },
+  watch: {
+    chartdata() {
+      console.log('Re rendering')
+      this.renderChart(this.chartdata, this.options)
+    }
+  },
   mounted () {
     this.renderChart(this.chartdata, this.options)
-  }
+  },
+
 }
 </script>
