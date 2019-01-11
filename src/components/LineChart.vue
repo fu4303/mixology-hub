@@ -6,17 +6,15 @@ export default {
   props: {
     chartdata: {
       type: Object,
-      default: null
+      default: null,
     },
     options: {
       type: Object,
       default: null,
-      responsive: true
     }
   },
   watch: {
     chartdata() {
-      console.log('Re rendering')
       this.renderChart(this.chartdata, this.options)
     }
   },

@@ -20,6 +20,7 @@ export default {
     return {
       loaded: false,
       line: [],
+      line2: [],
       options: null,
       cocktails: [],
       labels: [],
@@ -46,7 +47,16 @@ export default {
       return {
         datasets: [
           {
-            data: this.line
+            label: "Training Data Loss",
+            data: this.line,
+            borderColor: "#3e95cd",
+            backgroundColor: "#3e95cd"
+          },
+          {
+            label: "Validation Data Loss",
+            data: this.line2,
+            borderColor: "#e8c3b9",
+            backgroundColor: "#e8c3b9"
           }
         ]
       }
@@ -120,17 +130,18 @@ export default {
     async trainModel() {
       //train the model, 10% of training data is broken off for validation.
         var options = {
-          epochs: 10,
+          epochs: 50,
           validationSplit: 0.1,
           shuffle: true,
           callbacks: {
             onTrainBegin: () => (console.log('train start')),
             onTrainEnd: () => (console.log('train end')),
+            onBatchEnd: tf.nextFrame,
             onEpochEnd: async(num, logs) => {
-              await tf.nextFrame();
-              //console.log('epoch: ' + num);
-              //console.log('loss: ' + logs.loss);
+              console.log('epoch: ' + num);
+              console.log('loss: ' + logs.loss + "," + logs.val_loss);
               this.line.push(logs.loss)
+              this.line2.push(logs.val_loss)
               
             }
           }
@@ -150,9 +161,8 @@ export default {
   async mounted () {
     this.loaded = false
       try {
-        const { data } = await this.line
-        console.log(data);
-        this.chartData = data;
+        //const { data } = await this.line
+        //this.chartData = data;
         
         this.loaded = true
       } catch (e) {
