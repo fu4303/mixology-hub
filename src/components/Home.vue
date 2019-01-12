@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <line-chart
-      v-if="loaded"
       :chartdata="chartdata"
       :options="options"/>
   </div>
@@ -49,14 +48,14 @@ export default {
           {
             label: "Training Data Loss",
             data: this.line,
-            borderColor: "#3e95cd",
-            backgroundColor: "#3e95cd"
+            borderColor: "#BB00FF",
+            backgroundColor: "#BB00FF"
           },
           {
             label: "Validation Data Loss",
             data: this.line2,
-            borderColor: "#e8c3b9",
-            backgroundColor: "#e8c3b9"
+            borderColor: "#09B26A",
+            backgroundColor: "#09B26A"
           }
         ]
       }
@@ -99,13 +98,13 @@ export default {
     buildModel(){
       this.model = tf.sequential();
 
-        var hidden = tf.layers.dense({
+        let hidden = tf.layers.dense({
           units: 16,
           activation: "sigmoid",
           inputDim: 6
         });
         //categorical distribution over K possible values
-        var output = tf.layers.dense({
+        let output = tf.layers.dense({
           units: 11,
           activation: "softmax"
         });
@@ -114,22 +113,23 @@ export default {
 
         //create optimizer, then loss function
         //entropy is the chaos associated w/ a system - good for sigmoid + softmax
-        var lr = 0.2;
-        var optimizer = tf.train.sgd(lr);
+        let lr = 0.2;
+        let optimizer = tf.train.sgd(lr);
         this.model.compile({
           optimizer: optimizer,
           loss: "categoricalCrossentropy"
         });
 
         this.trainModel().then(results => {
-          console.log(results.history.loss);
+          //console.log(results.history.loss);
+          //here we will start inference with the results given
         });
         
     },
 
     async trainModel() {
       //train the model, 10% of training data is broken off for validation.
-        var options = {
+        let options = {
           epochs: 50,
           validationSplit: 0.1,
           shuffle: true,
@@ -156,22 +156,7 @@ export default {
 
     this.init();
 
-  },
-
-  async mounted () {
-    this.loaded = false
-      try {
-        //const { data } = await this.line
-        //this.chartData = data;
-        
-        this.loaded = true
-      } catch (e) {
-        console.error(e)
-      }
-  
-  }
-
-    
+  } 
   
 };
 </script>
