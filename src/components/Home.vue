@@ -1,25 +1,22 @@
 <template>
   <div class="container">
-    <line-chart
-      :chartdata="chartdata"
-      :options="options"/>
+      <h1>MixoLogy</h1>
+      <div id="lossChart" ref="lossChart"></div>
   </div>
 </template>
 
 
 <script>
 import * as tf from "@tensorflow/tfjs";
+import * as tfvis from '@tensorflow/tfjs-vis';
 import cocktailData from "../assets/complete_cocktails.json";
-import LineChart from './LineChart.vue';
 
 export default {
   name: "Home",
-  components: {LineChart},
   data() {
     return {
       loaded: false,
-      line: [],
-      line2: [],
+      lossValues: [[], []],
       options: null,
       cocktails: [],
       labels: [],
@@ -39,26 +36,6 @@ export default {
         "Vodka",
         "Cocktail Classics"
       ]
-    }
-  },
-  computed: {
-    chartdata() {
-      return {
-        datasets: [
-          {
-            label: "Training Data Loss",
-            data: this.line,
-            borderColor: "#BB00FF",
-            backgroundColor: "#BB00FF"
-          },
-          {
-            label: "Validation Data Loss",
-            data: this.line2,
-            borderColor: "#09B26A",
-            backgroundColor: "#09B26A"
-          }
-        ]
-      }
     }
   },
   methods: {
@@ -123,6 +100,7 @@ export default {
         this.trainModel().then(results => {
           //console.log(results.history.loss);
           //here we will start inference with the results given
+          this.getInference();
         });
         
     },
@@ -131,7 +109,7 @@ export default {
       //train the model, 10% of training data is broken off for validation.
         let options = {
           epochs: 50,
-          validationSplit: 0.1,
+          validationSplit: 0.2,
           shuffle: true,
           callbacks: {
             onTrainBegin: () => (console.log('train start')),
@@ -140,14 +118,43 @@ export default {
             onEpochEnd: async(num, logs) => {
               console.log('epoch: ' + num);
               console.log('loss: ' + logs.loss + "," + logs.val_loss);
-              this.line.push(logs.loss)
-              this.line2.push(logs.val_loss)
-              
+              this.lossValues[0].push({'x': num, 'y': logs.loss});
+              this.lossValues[1].push({'x': num, 'y': logs.val_loss});
+              const lossContainer = this.$refs.lossChart;
+              tfvis.render.linechart(
+                  {values: this.lossValues, series: ['train', 'validation']}, lossContainer,
+                  {
+                    width: 420,
+                    height: 300,
+                    xLabel: 'epoch',
+                    yLabel: 'loss',
+                  });
             }
           }
         }
         return await this.model.fit(this.xs, this.ys, options);
     },
+
+    getInference(){
+      //replace this with a way to choose ingredients
+      let i1 = 1;
+      let i2 = 2;
+      let i3 = 3;
+      let i4 = 4;
+      let i5 = 5;
+      let i6 = 70;
+
+      tf.tidy(() => {
+        const input = tf.tensor2d([
+          [i1,i2,i3,i4,i5,i6]
+        ]);
+        let results = this.model.predict(input);
+        let argMax = results.argMax(1);
+        let index = argMax.dataSync()[0];
+        let label = this.labelList[index];
+        console.log(label)
+      })
+    }
     
     
   },

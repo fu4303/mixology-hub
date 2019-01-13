@@ -10,9 +10,9 @@
   "dependencies": {
     "@tensorflow/tfjs": "^0.14.1",
     "@tensorflow/tfjs-node": "^0.2.1",
-    "chart.js": "^2.7.3",
-    "vue": "^2.5.21",
-    "vue-chartjs": "^3.4.0"
+    "@tensorflow/tfjs-vis": "^0.4.2",
+    "numjs": "0.16.0",
+    "vue": "^2.5.21"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0",
