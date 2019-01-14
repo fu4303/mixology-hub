@@ -35,11 +35,321 @@ export default {
         "Rum - Daiquiris",
         "Vodka",
         "Cocktail Classics"
+      ],
+      ingredientList: [
+        "",
+        "gin",
+        "light rum",
+        "vodka",
+        "brandy",
+        "sweet vermouth",
+        "dark rum",
+        "dry vermouth",
+        "amaretto",
+        "sloe gin",
+        "lemon juice",
+        "juice of a lime",
+        "soda water",
+        "bacardi rum",
+        "absinthe",
+        "irish whiskey",
+        "bourbon whiskey",
+        "scotch whiskey",
+        "simple syrup",
+        "blended whiskey",
+        "orange bitters",
+        "triple sec",
+        "green creme de menthe",
+        "ginger ale",
+        "passion fruit syrup",
+        "cranberry juice",
+        "sugar",
+        "orange wheel",
+        "pineapple juice",
+        "orange juice",
+        "white creme de menthe",
+        "apple cider",
+        "margarita mix",
+        "angostura bitters",
+        "bourbon",
+        "bourbon or rye whiskey",
+        "kirschwasser",
+        "straight rye whiskey",
+        "applejack",
+        "club soda",
+        "mint",
+        "sake",
+        "anisette",
+        "bitters",
+        "creme de cacao (brown)",
+        "creme de cacao (white)",
+        "hard cider",
+        "cherry-flavored brandy",
+        "pear brandy",
+        "hennessy v.s cognac",
+        "blue curacao",
+        "coffee-flavored brandy",
+        "maraschino liqueur",
+        "soda water or ginger ale",
+        "mandarine napoleon liqueur",
+        "coffee liqueur",
+        "green chartreuse",
+        "yellow chartreuse",
+        "benedictine",
+        "apple brandy",
+        "creme de banana",
+        "grapefruit juice",
+        "cynar",
+        "coconut milk",
+        "tonic water",
+        "juice of orange",
+        "grenadine",
+        "apple schnapps",
+        "cola",
+        "apple slice",
+        "kummel",
+        "tennessee whiskey",
+        "orange curacao",
+        "egg white",
+        "whole egg",
+        "chilled champagne",
+        "green olive",
+        "lime wedge",
+        "port",
+        "lemon twist",
+        "sour mix",
+        "light vermouth",
+        "fernet-branca",
+        "cinnamon schnapps",
+        "half-and-half",
+        "fresh carrot juice",
+        "orgeat or almond syrup",
+        "cream sherry",
+        "apple juice",
+        "light cream",
+        "pimm's no 1 cup",
+        "dry sherry",
+        "agave nectar",
+        "white whiskey",
+        "lillet blanc",
+        "grand mariner",
+        "peach bitters",
+        "aromatic bitters",
+        "blackberry-flavored brandy",
+        "strawberry liqueur",
+        "dubonnet rouge",
+        "mint syrup",
+        "water",
+        "egg yolk",
+        "cognac",
+        "canadian whiskey",
+        "tequila",
+        "madeira",
+        "creme de cassis",
+        "anis",
+        "crushed or shaved ice",
+        "orange twist",
+        "irish cream liqueur",
+        "honey syrup",
+        "amaro",
+        "limoncello",
+        "aperol",
+        "vanilla ice cream",
+        "citrus-flavored vodka",
+        "mezcal",
+        "campari",
+        "orange flavored gin",
+        "jamaica rum",
+        "elderflower liqueur",
+        "lemon-flavored vodka",
+        "pear-flavored vodka",
+        "lime and salt for glass",
+        "creme de noyaux",
+        "grape vodka",
+        "cream",
+        "ginger beer",
+        "worcestershire sauce",
+        "cachaca",
+        "light or dark rum",
+        "coconut rum",
+        "white chocolate liqueur",
+        "lime wheel",
+        "creme de violette",
+        "maraschino cherry",
+        "mint-flavored gin",
+        "lillet rouge",
+        "milk",
+        "forbidden fruit",
+        "vanilla syrup",
+        "lime and sugar for glass",
+        "roses lime juice",
+        "lemon and sugar for glass",
+        "lime-flavored vodka",
+        "peychaud's Bitters",
+        "apricot-flavored brandy",
+        "orange zest",
+        "edible flower",
+        "cucumber",
+        "celery",
+        "catsup",
+        "root beer",
+        "manzanilla sherry",
+        "lemon soda",
+        "lemon-lime soda",
+        "demerara syrup",
+        "crema di limoncello",
+        "black raspberry liqueur",
+        "whole cloves",
+        "grapefruit marmalade",
+        "rock and rye",
+        "salt",
+        "pepper",
+        "salt and papper",
+        "pineapple",
+        "maple syrup",
+        "tiki bitters",
+        "ground cinnamon",
+        "grapefruit bitters",
+        "nutmeg",
+        "cream of coconut",
+        "raspberry syrup",
+        "lemon and salt for glass",
+        "sparkling cider",
+        "coffee",
+        "rosemary sprig",
+        "lemon wedge",
+        "tea",
+        "orange-flavored vodka",
+        "strawberries",
+        "corn whiskey",
+        "cilantro leaves",
+        "vanilla-infused bourbon",
+        "ginger liqueur",
+        "blackberry liqueur",
+        "grapefruit-flavored vodka",
+        "amontillado sherry",
+        "vanilla liqueur",
+        "clementine",
+        "raspberry yogurt",
+        "cherry-flavored wine",
+        "cherry-flavored vodka",
+        "stout",
+        "strega",
+        "hot shot tropical fruit liqueur",
+        "strawberry schnapps",
+        "peach-flavored vodka",
+        "passion fruit juice",
+        "vanilla-flavored vodka",
+        "aquavit",
+        "raspberry-flavored liqueur",
+        "acai berry flavored vodka",
+        "calvados",
+        "pisco",
+        "basil leaves",
+        "red wine",
+        "grape juice",
+        "melon liqueur",
+        "cherry liqueur",
+        "peach-flavored brandy",
+        "gold rum",
+        "pear",
+        "ginger",
+        "cherry tomatoes",
+        "aged rhum agricole",
+        "creole shrub",
+        "armagnac",
+        "red grapes",
+        "white wine",
+        "tomato juice",
+        "beer",
+        "peach slice",
+        "grapefruit twist",
+        "fresh berries",
+        "lemon wheel",
+        "mango slice",
+        "raspberry-flavored vodka",
+        "spiced rum",
+        "sage leaves",
+        "thyme sprigs",
+        "candy stick",
+        "lychees",
+        "sparkling wine",
+        "banana",
+        "lime twist",
+        "hot sauce",
+        "peppermint schnapps",
+        "grapefruit soda",
+        "sweet sherry",
+        "swedish punch",
+        "honey liqueur",
+        "peach schnapps",
+        "pear liqueur",
+        "blood orange liqueur",
+        "becherovka",
+        "pomegranate syrup",
+        "sambuca",
+        "rose water",
+        "orange blossom water",
+        "lavender syrup",
+        "cinnamon stick",
+        "almond extract",
+        "almond milk",
+        "b&b",
+        "vinegar",
+        "pickle slice",
+        "pickle brine",
+        "grated chocolate",
+        "apricot nectar",
+        "pomegranate molasses",
+        "galliano",
+        "raspberry juice",
+        "honey",
+        "mango juice",
+        "horseradish",
+        "creme yvette",
+        "creme de p√™che",
+        "guava puree",
+        "creme fraiche",
+        "citrus sherbet",
+        "peach liqueur",
+        "punt e mes",
+        "Amer Picon or Torani Amer",
+        "V8 juice",
+        "peach puree",
+        "butterscotch schnapps",
+        "chile syrup",
+        "tomato-clam juice",
+        "lemonade",
+        "pastis",
+        "black licorice stick",
+        "pomegranate juice",
+        "cherry juice",
+        "cold beef bouillon",
+        "tropical fruit schnapps",
+        "falernum",
+        "allspice liqueur",
+        "olive brine",
+        "drambuie",
+        "collins mix",
+        "mango flavored vodka",
+        "Mountain Dew",
+        "white grapes",
+        "lime liqueur",
+        "clam juice",
+        "raspberry ice cream",
+        "rhubarb syrup",
+        "coconut liqueur",
+        "Honey-Currant Syrup",
+        "ginger syrup",
+        "gingerbread liqueur",
+        "lychee liqueur"
       ]
     }
   },
   methods: {
     init() {
+
+     
       for (let record of cocktailData) {
         let col = [
           record.ingredientCat1,
@@ -50,9 +360,18 @@ export default {
           record.ingredientCat6
         ];
         this.cocktails.push(col);
-        this.labels.push(this.labelList.indexOf(record.category));
+        //this.labels.push(this.labelList.indexOf(record.category));
+        //we shouldn't be checking ingredients names here, just the index of ingredientList, compared to ingredientCat1
       }
-
+      for(let r of cocktailData) {
+         for (let i of this.ingredientList){
+           if (r.ingredientCat1 == this.ingredientList.indexOf(i)){
+             this.labels.push(r.ingredientCat1)
+           }
+         }
+      }
+      console.log(this.labels)
+      
       this.oneHotEncodeLabels(this.cocktails)
     },
     oneHotEncodeLabels(cocktailLabels) {
@@ -66,10 +385,10 @@ export default {
 
     this.buildModel();
 
-    /*console.log(xs.shape);
-    console.log(ys.shape);
-    xs.print();
-    ys.print();*/
+    /*console.log(this.xs.shape);
+    console.log(this.ys.shape);
+    this.xs.print();
+    this.ys.print();*/
     },
 
     buildModel(){
@@ -90,8 +409,8 @@ export default {
 
         //create optimizer, then loss function
         //entropy is the chaos associated w/ a system - good for sigmoid + softmax
-        let lr = 0.2;
-        let optimizer = tf.train.sgd(lr);
+        let LEARNING_RATE = 0.2;
+        let optimizer = tf.train.sgd(LEARNING_RATE);
         this.model.compile({
           optimizer: optimizer,
           loss: "categoricalCrossentropy"
@@ -109,7 +428,7 @@ export default {
       //train the model, 10% of training data is broken off for validation.
         let options = {
           epochs: 50,
-          validationSplit: 0.2,
+          validationSplit: 0.1,
           shuffle: true,
           callbacks: {
             onTrainBegin: () => (console.log('train start')),
@@ -137,7 +456,7 @@ export default {
 
     getInference(){
       //replace this with a way to choose ingredients
-      let i1 = 1;
+      let i1 = 60;
       let i2 = 2;
       let i3 = 3;
       let i4 = 4;
@@ -151,9 +470,20 @@ export default {
         let results = this.model.predict(input);
         let argMax = results.argMax(1);
         let index = argMax.dataSync()[0];
-        let label = this.labelList[index];
-        console.log(label)
+        let label = this.ingredientList[index];
+        console.log(index)
+        this.suggestDrink(index)
       })
+    },
+    
+    suggestDrink(label){
+      console.log(label)
+      for (let record of cocktailData) {
+        if (label == record.ingredientCat2 || label == record.ingredientCat3 || label == record.ingredientCat4){
+          //this is the most likely pairing
+          console.log(record)
+        }
+      }
     }
     
     
