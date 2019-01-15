@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-      <h1>MixoLogy</h1>
-      <div id="lossChart" ref="lossChart"></div>
+    <h1>MixoLogy</h1>
+    <div id="lossChart" ref="lossChart"></div>
   </div>
 </template>
 
 
 <script>
 import * as tf from "@tensorflow/tfjs";
-import * as tfvis from '@tensorflow/tfjs-vis';
+import * as tfvis from "@tensorflow/tfjs-vis";
 import cocktailData from "../assets/complete_cocktails.json";
 
 export default {
@@ -23,7 +23,7 @@ export default {
       model: [],
       xs: [],
       ys: [],
-      labelList: [
+      /*labelList: [
         "Rum",
         "Non-alcoholic Drinks",
         "Shooters",
@@ -35,7 +35,7 @@ export default {
         "Rum - Daiquiris",
         "Vodka",
         "Cocktail Classics"
-      ],
+      ],*/
       ingredientList: [
         "",
         "gin",
@@ -313,8 +313,8 @@ export default {
         "citrus sherbet",
         "peach liqueur",
         "punt e mes",
-        "Amer Picon or Torani Amer",
-        "V8 juice",
+        "amer picon or rorani Amer",
+        "v8 juice",
         "peach puree",
         "butterscotch schnapps",
         "chile syrup",
@@ -332,24 +332,22 @@ export default {
         "drambuie",
         "collins mix",
         "mango flavored vodka",
-        "Mountain Dew",
+        "mountain dew",
         "white grapes",
         "lime liqueur",
         "clam juice",
         "raspberry ice cream",
         "rhubarb syrup",
         "coconut liqueur",
-        "Honey-Currant Syrup",
+        "honey-xurrant syrup",
         "ginger syrup",
         "gingerbread liqueur",
         "lychee liqueur"
       ]
-    }
+    };
   },
   methods: {
     init() {
-
-     
       for (let record of cocktailData) {
         let col = [
           record.ingredientCat1,
@@ -360,101 +358,103 @@ export default {
           record.ingredientCat6
         ];
         this.cocktails.push(col);
+        //use these labels if you just want a general idea of the category
         //this.labels.push(this.labelList.indexOf(record.category));
-        //we shouldn't be checking ingredients names here, just the index of ingredientList, compared to ingredientCat1
       }
-      for(let r of cocktailData) {
-         for (let i of this.ingredientList){
-           if (r.ingredientCat1 == this.ingredientList.indexOf(i)){
-             this.labels.push(r.ingredientCat1)
-           }
-         }
+      for (let r of cocktailData) {
+        for (let i of this.ingredientList) {
+          if (r.ingredientCat1 == this.ingredientList.indexOf(i)) {
+            this.labels.push(r.ingredientCat1);
+          }
+        }
       }
-      console.log(this.labels)
-      
-      this.oneHotEncodeLabels(this.cocktails)
+      this.oneHotEncodeLabels(this.cocktails);
     },
     oneHotEncodeLabels(cocktailLabels) {
       //convert this to numeric using oneHot
-    this.xs = tf.tensor2d(cocktailLabels);
+      this.xs = tf.tensor2d(cocktailLabels);
 
-    var labelsTensor = tf.tensor1d(this.labels, "int32");
-    this.ys = tf.oneHot(labelsTensor, 11);
-    //for memory management
-    labelsTensor.dispose();
+      var labelsTensor = tf.tensor1d(this.labels, "int32");
+      this.ys = tf.oneHot(labelsTensor, 11);
+      //for memory management
+      labelsTensor.dispose();
 
-    this.buildModel();
+      this.buildModel();
 
-    /*console.log(this.xs.shape);
-    console.log(this.ys.shape);
-    this.xs.print();
-    this.ys.print();*/
+      /*console.log(this.xs.shape);
+      console.log(this.ys.shape);
+      this.xs.print();
+      this.ys.print();*/
     },
 
-    buildModel(){
+    buildModel() {
       this.model = tf.sequential();
 
-        let hidden = tf.layers.dense({
-          units: 16,
-          activation: "sigmoid",
-          inputDim: 6
-        });
-        //categorical distribution over K possible values
-        let output = tf.layers.dense({
-          units: 11,
-          activation: "softmax"
-        });
-        this.model.add(hidden);
-        this.model.add(output);
+      let hidden = tf.layers.dense({
+        units: 16,
+        activation: "sigmoid",
+        inputDim: 6
+      });
+      //categorical distribution over K possible values
+      let output = tf.layers.dense({
+        units: 11,
+        activation: "softmax"
+      });
+      this.model.add(hidden);
+      this.model.add(output);
 
-        //create optimizer, then loss function
-        //entropy is the chaos associated w/ a system - good for sigmoid + softmax
-        let LEARNING_RATE = 0.2;
-        let optimizer = tf.train.sgd(LEARNING_RATE);
-        this.model.compile({
-          optimizer: optimizer,
-          loss: "categoricalCrossentropy"
-        });
+      //create optimizer, then loss function
+      //entropy is the chaos associated w/ a system - good for sigmoid + softmax
+      let LEARNING_RATE = 0.2;
+      let optimizer = tf.train.sgd(LEARNING_RATE);
+      this.model.compile({
+        optimizer: optimizer,
+        loss: "categoricalCrossentropy"
+      });
 
-        this.trainModel().then(results => {
-          //console.log(results.history.loss);
-          //here we will start inference with the results given
-          this.getInference();
-        });
-        
+      this.trainModel().then(results => {
+        //console.log(results.history.loss);
+        //here we will start inference with the results given
+        this.getInference();
+
+        //save the model as well
+        this.model.save(`downloads://my-model`);
+      });
     },
 
     async trainModel() {
       //train the model, 10% of training data is broken off for validation.
-        let options = {
-          epochs: 50,
-          validationSplit: 0.1,
-          shuffle: true,
-          callbacks: {
-            onTrainBegin: () => (console.log('train start')),
-            onTrainEnd: () => (console.log('train end')),
-            onBatchEnd: tf.nextFrame,
-            onEpochEnd: async(num, logs) => {
-              console.log('epoch: ' + num);
-              console.log('loss: ' + logs.loss + "," + logs.val_loss);
-              this.lossValues[0].push({'x': num, 'y': logs.loss});
-              this.lossValues[1].push({'x': num, 'y': logs.val_loss});
-              const lossContainer = this.$refs.lossChart;
-              tfvis.render.linechart(
-                  {values: this.lossValues, series: ['train', 'validation']}, lossContainer,
-                  {
-                    width: 420,
-                    height: 300,
-                    xLabel: 'epoch',
-                    yLabel: 'loss',
-                  });
-            }
+      let options = {
+        epochs: 50,
+        validationSplit: 0.1,
+        shuffle: true,
+        callbacks: {
+          onTrainBegin: () => console.log("train start"),
+          onTrainEnd: () => console.log("train end"),
+          onBatchEnd: tf.nextFrame,
+          onEpochEnd: async (num, logs) => {
+            console.log("epoch: " + num);
+            console.log("loss: " + logs.loss + "," + logs.val_loss);
+            this.lossValues[0].push({ x: num, y: logs.loss });
+            this.lossValues[1].push({ x: num, y: logs.val_loss });
+            const lossContainer = this.$refs.lossChart;
+            tfvis.render.linechart(
+              { values: this.lossValues, series: ["train", "validation"] },
+              lossContainer,
+              {
+                width: 420,
+                height: 300,
+                xLabel: "epoch",
+                yLabel: "loss"
+              }
+            );
           }
         }
-        return await this.model.fit(this.xs, this.ys, options);
+      };
+      return await this.model.fit(this.xs, this.ys, options);
     },
 
-    getInference(){
+    getInference() {
       //replace this with a way to choose ingredients
       let i1 = 60;
       let i2 = 2;
@@ -464,36 +464,33 @@ export default {
       let i6 = 70;
 
       tf.tidy(() => {
-        const input = tf.tensor2d([
-          [i1,i2,i3,i4,i5,i6]
-        ]);
+        const input = tf.tensor2d([[i1, i2, i3, i4, i5, i6]]);
         let results = this.model.predict(input);
         let argMax = results.argMax(1);
         let index = argMax.dataSync()[0];
         let label = this.ingredientList[index];
-        console.log(index)
-        this.suggestDrink(index)
-      })
+        console.log(index);
+        this.suggestDrink(index);
+      });
     },
-    
-    suggestDrink(label){
-      console.log(label)
+
+    suggestDrink(label) {
+      console.log(label);
       for (let record of cocktailData) {
-        if (label == record.ingredientCat2 || label == record.ingredientCat3 || label == record.ingredientCat4){
+        if (
+          label == record.ingredientCat2 ||
+          label == record.ingredientCat3 ||
+          label == record.ingredientCat4
+        ) {
           //this is the most likely pairing
-          console.log(record)
+          console.log(record);
         }
       }
     }
-    
-    
   },
 
   created() {
-
     this.init();
-
-  } 
-  
+  }
 };
 </script>
